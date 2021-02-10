@@ -123,6 +123,8 @@ tokened_docs={}
 # unique vocabulary
 vocab = []
 
+stop_words=["of", "in", "on", "is"]
+
 for k,v in docs.items():
 
     print("Pre-process document: ", k)
@@ -133,6 +135,9 @@ for k,v in docs.items():
 
     # remove punctuations '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
     tokens = [w for w in tokens if w not in string.punctuation]
+
+    # remove stop words
+    tokens = [w for w in tokens if w not in stop_words]
 
     #print(tokens)
     
@@ -198,9 +203,24 @@ while True:
     vq = np.array(vq)
 
     # formulae of cosine similarity
-    fsim = lambda d, q: np.sum(d * q) / np.sqrt(np.sum(d**2) * np.sum(q**2))
+    sim = lambda d, q: np.sum(d * q) / np.sqrt(np.sum(d**2) * np.sum(q**2))
+
+    scores={}
+    scores_sum = 0.
 
     # calculate similarities for all documents
     for doc, vd in vectors.items():
-        vsim = fsim(vd, vq)
-        print(f"sim({doc}, query)={vsim:.5f}")
+        s = sim(vd, vq)
+        print(f"sim({doc}, query)={s:.5f}")
+        scores[doc] = s
+        scores_sum += s
+
+    print("")
+
+    # normalize scores
+    for doc, score in scores.items():
+        scores[doc] = scores[doc]/scores_sum
+        print(f"Normalized score of {doc}={scores[doc]:.5f}")
+
+
+    print("")
