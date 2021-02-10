@@ -2,6 +2,8 @@
 
 import numpy as np
 import string
+import sqlite3
+import os
 
 
 doc1="""
@@ -116,6 +118,16 @@ docs={"doc1":doc1, "doc2":doc2, "doc3":doc3, "doc4":doc4, "doc5":doc5}
 for d in docs:
     print("document: ", d)
     print(docs[d])
+
+
+
+#if not os.path.exists("data"):
+#    os.makedirs("data")
+
+
+# create database for storing metadata
+#conn = sqlite3.connect('data/naive-vsm-search-engine.db')
+
 
 # Tokenizing and pre-processing documents
 tokened_docs={}
