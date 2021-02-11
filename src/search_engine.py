@@ -236,3 +236,13 @@ while True:
 
 
     print("")
+
+    # find max
+    doc = max(scores, key = lambda k:scores[k])
+
+    print("")
+    print("doc=", doc)
+    print(docs[doc])
+    print("")
+    
+
